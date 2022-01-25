@@ -6,7 +6,7 @@
   "scripts": {
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "dev": "ts-node-dev --exit-child src/index.ts",
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/crypt.ts",
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -38,5 +38,9 @@
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@types/crypto-js": "^4.1.0",
+    "crypto-js": "^4.1.1"
   }
 }
