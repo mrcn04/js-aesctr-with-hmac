@@ -3,6 +3,18 @@ js-aesctr-with-hmac
 
 [![License](https://img.shields.io/github/license/thenewboston-developers/website)](http://opensource.org/licenses/MIT)
 
+## Installation
+
+```
+npm install
+```
+
+## Start
+
+```
+npm start
+```
+
 ## Contributors
 
 <table>
