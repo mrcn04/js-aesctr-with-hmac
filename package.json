@@ -1,0 +1,41 @@
+{
+  "name": "js-aesctr-with-hmac",
+  "version": "1.0.0",
+  "description": "js-aesctr-with-hmac",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --exit-child src/index.ts",
+    "start": "ts-node src/index.ts",
+    "lint": "eslint src/**/*.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrcn04/js-aesctr-with-hmac.git"
+  },
+  "author": "Ömürcan Cengiz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrcn04/js-aesctr-with-hmac/issues"
+  },
+  "homepage": "https://github.com/mrcn04/js-aesctr-with-hmac#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "7.0.4",
+    "lint-staged": "12.3.1",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  }
+}
