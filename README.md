@@ -14,7 +14,7 @@ js-aesctr-with-hmac
     </td>
     <td align="center">
       <a href="https://github.com/akdilsiz">
-        <img src="https://avatars.githubusercontent.com/u/15758169?v=4">
+        <img src="https://avatars.githubusercontent.com/u/15758169?s=48&v=4">
       </a>
     </td>
   </tr>
