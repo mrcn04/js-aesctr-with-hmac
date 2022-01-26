@@ -8,7 +8,7 @@ const hmacSize = SHA512('TransferChain').toString(enc.Base64).length;
 
 console.log('hmacSize', hmacSize);
 
-// const ErrInvalidHMAC = new Error('Invalid HMAC');
+const ErrInvalidHMAC = new Error('Invalid HMAC');
 
 const aesKey = [
   139, 46, 150, 181, 48, 123, 170, 178, 55, 133, 209, 214, 35, 46, 101, 32, 231, 24, 92, 86, 3, 41,
@@ -40,11 +40,13 @@ function Encrypt(inn?, out?, keyAes?, keyHmac?) {
 
   console.log('aes', aes);
 
-  const sha512 = algo.HMAC.create(algo.SHA512, aes.toString()).finalize();
+  const sha512 = algo.HMAC.create(algo.SHA512, aes).finalize();
 
-  const hmacWA = keyHmac.map((x) => (typeof x === 'number' ? x.toString() : x)).join('');
+  const hmacWA = keyHmac.map((x: unknown) => (typeof x === 'number' ? x.toString() : x)).join('');
 
   const hmac = HmacSHA512(sha512, hmacWA).toString();
+
+  if (!hmac) return ErrInvalidHMAC;
 
   console.log('hmac', hmac);
 
