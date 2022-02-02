@@ -3,7 +3,7 @@ import { randomBytes } from 'crypto';
 
 // const BUFFER_SIZE: number = 16 * 1024;
 const IV_SIZE = 16;
-// const V1 = new Uint16Array(128);
+const V1 = '0x1';
 const hmacSize = SHA512('TransferChain').toString(enc.Base64).length;
 
 console.log('hmacSize', hmacSize);
@@ -16,41 +16,60 @@ const aesKey = [
 ];
 const hmacKey = aesKey;
 
-function Encrypt(inn?, out?, keyAes?, keyHmac?) {
-  console.log(inn, out, keyAes, keyHmac);
+function Encrypt(inn, out: Buffer, keyAes, keyHmac): Error {
+  // const iv = new Uint16Array(IV_SIZE);
+  // console.log('iv', iv);
 
-  keyAes = aesKey;
-  keyHmac = hmacKey;
+  const iv = Array.from(randomBytes(IV_SIZE));
+  if (!iv) return new Error();
+  console.log('random bytes IV', iv);
 
-  const iv = new Uint16Array(IV_SIZE);
-  console.log('iv', iv);
+  const aesWA = keyAes.map((x: unknown) => typeof x === 'number' && x.toString());
 
-  const rb = Array.from(randomBytes(IV_SIZE));
-  if (!rb) return new Error();
-  console.log('random bytes', rb);
+  console.log(111, JSON.stringify(aesWA));
 
-  const aesWA = keyAes.map((x: unknown) => typeof x === 'number' && x.toString()).join('');
-
-  console.log(111, aesWA);
-
-  const aes = AES.encrypt('TransferChain', aesWA, {
+  const aes = AES.encrypt(JSON.stringify(aesWA), JSON.stringify(iv), {
     mode: mode.CTR,
     padding: pad.NoPadding,
   }).toString();
 
   console.log('aes', aes);
 
-  const sha512 = algo.HMAC.create(algo.SHA512, aes).finalize();
+  // const sha512 = algo.HMAC.create(algo.SHA512, aes).finalize();
 
-  const hmacWA = keyHmac.map((x: unknown) => (typeof x === 'number' ? x.toString() : x)).join('');
+  // const hmacWA = keyHmac.map((x: unknown) => (typeof x === 'number' ? x.toString() : x)).join('');
 
-  const hmac = HmacSHA512(sha512, hmacWA).toString();
+  const hmac = HmacSHA512(algo.SHA512.toString(), JSON.stringify(keyHmac)).toString();
 
   if (!hmac) return ErrInvalidHMAC;
 
   console.log('hmac', hmac);
 
+  const w = Buffer.concat([out, Buffer.from(hmac)]);
+  w.write(iv.toString());
+  console.log('multi buffer', w);
+
+  const buf = strToUtf16Bytes(inn);
+
+  buf.forEach((b: never, i: number) => {
+    if (b && i !== 0) {
+      const outBuf = strToUtf16Bytes(i);
+      console.log(outBuf);
+    }
+  });
+
   // throw ErrInvalidHMAC;
 }
 
-Encrypt();
+function strToUtf16Bytes(str) {
+  const bytes = [];
+  for (let ii = 0; ii < str.length; ii++) {
+    const code = str.charCodeAt(ii);
+    bytes.push(code & 255, code >> 8);
+  }
+  return bytes;
+}
+
+const msg = 'My Secret Message';
+
+Encrypt(msg, Buffer.from(V1), aesKey, hmacKey);
