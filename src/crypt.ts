@@ -47,16 +47,21 @@ function Encrypt(inn, out: Buffer, keyAes, keyHmac): Error {
 
   const w = Buffer.concat([out, Buffer.from(hmac)]);
   w.write(iv.toString());
-  console.log('multi buffer', w);
+  console.log('multi buffer', w.toString());
 
   const buf = strToUtf16Bytes(inn);
 
-  buf.forEach((b: never, i: number) => {
-    if (b && i !== 0) {
-      const outBuf = strToUtf16Bytes(i);
+  console.log(buf);
+
+  buf.forEach((b) => {
+    if (b) {
+      const outBuf = strToUtf16Bytes(b);
+      // w.write(outBuf.toString());
       console.log(outBuf);
     }
   });
+
+  // console.log(w.toString());
 
   // throw ErrInvalidHMAC;
 }
