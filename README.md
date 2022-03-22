@@ -1,7 +1,7 @@
 # js-aesctr-with-hmac
 js-aesctr-with-hmac
 
-[![License](https://img.shields.io/github/license/thenewboston-developers/website)](http://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](http://opensource.org/licenses/MIT)
 
 ## Installation
 
